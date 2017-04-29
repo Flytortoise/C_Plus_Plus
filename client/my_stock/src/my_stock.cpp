@@ -1,0 +1,29 @@
+#include "my_stock.h"
+#include <errno.h>
+#include <arpa/inet.h>
+
+Client_Stock :: Client_Stock ()
+{
+	client_stock = socket(AF_INET,SOCK_STREAM,0);	//创建客户端的套接字
+	if(client_stock < 0)
+	{
+	    perror("Client_sock error!");
+		exit(-1);
+	}
+
+	bzero(&serve_addr,sizeof(serve_addr));
+	serve_addr.sin_family = AF_INET;
+	serve_addr.sin_port = htons(PORT);
+	serve_addr.sin_addr.s_addr = inet_addr("192.168.1.189");
+}
+
+int Client_Stock :: My_Connect()
+{
+	if(connect(client_stock,(struct sockaddr *)&serve_addr,sizeof(struct sockaddr_in)) < 0)		//链接服务器
+    {
+	    perror("Connect error!");
+		exit(-1);
+	}
+
+	return client_stock;
+}
