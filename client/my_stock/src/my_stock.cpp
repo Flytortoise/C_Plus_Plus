@@ -1,8 +1,11 @@
 #include "my_stock.h"
 #include <errno.h>
 #include <arpa/inet.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <strings.h>
 
-Client_Stock :: Client_Stock ()
+Client_Stock :: Client_Stock()
 {
 	client_stock = socket(AF_INET,SOCK_STREAM,0);	//创建客户端的套接字
 	if(client_stock < 0)
@@ -26,4 +29,24 @@ int Client_Stock :: My_Connect()
 	}
 
 	return client_stock;
+}
+
+Client_Stock* Client_Stock::GetStock()
+{
+	if(client == NULL)
+	{
+		client = new Client_Stock();
+	}
+	
+	return client;
+}
+
+void Client_Stock::FreeStock()
+{
+	if(client != NULL)
+	{
+		printf("%d Client over !\n",client->client_stock);
+		delete client;
+		client = NULL;
+	}
 }

@@ -1,6 +1,10 @@
 #include "my_stock.h"
 #include <errno.h>
 #include <arpa/inet.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <strings.h>
+
 
 Serve_Stock :: Serve_Stock()
 {
@@ -48,4 +52,24 @@ int Serve_Stock :: Creat_stock()
 	}			//接收客户端
 
 	return client_stock;
+}
+
+Serve_Stock* Serve_Stock::GetStock()
+{
+	if(serve == NULL)
+	{
+		serve = new Serve_Stock();
+	}
+	
+	return serve;
+}
+
+void Serve_Stock::FreeStock()
+{
+	if(serve != NULL)
+	{
+		printf("Serve over !\n");
+		delete serve;
+		serve = NULL;
+	}
 }
