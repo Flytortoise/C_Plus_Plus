@@ -7,10 +7,11 @@ all : $(Target)
 mm:
 	cd main && $(MAKE)
 	cd my_stock && $(MAKE)
-
+	cd Start && $(MAKE)
 mc:
 	cd main && $(MAKE) clean
 	cd my_stock && $(MAKE) clean
+	cd Start && $(MAKE) clean
 
 $(Target) : mm
 	@$(CC) -o $(Target) $(Allobjs) -lpthread -lsqlite3
