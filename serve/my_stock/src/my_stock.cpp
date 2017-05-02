@@ -42,7 +42,7 @@ Serve_Stock :: Serve_Stock()
 	}
 }
 
-int Serve_Stock :: Creat_stock()
+int Serve_Stock :: Function()
 {
 	bzero(&client_addr,sizeof(client_addr));
 	if((client_stock = accept(serve_stock,(struct sockaddr *)&client_addr,&sockaddr_len)) < 0)

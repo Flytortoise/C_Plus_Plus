@@ -1,10 +1,35 @@
 #include "Start.h"
+#include <strings.h>
+#include <string.h>
+#include <iostream>
 
-#include <sqlite3.h>
+using namespace std;
 
-extern pNode head;
+start::start()
+{
+	char *etc2 = "etc/temp.db";
+	user = new Node();
+}
 
-int OffLine(void *para, int count, char **c_value, char **c_name)	
+AB_Director * start::CreateStart()
+{
+	if(my_start_ == NULL )
+	{
+		my_start_ = new start;		
+	}
+
+	return my_start_;
+}
+
+void start::FreeStart()
+{
+	if(my_start_ != NULL)
+	{
+		delete my_start_;
+	}
+}
+
+int start::OffLine(void *para, int count, char **c_value, char **c_name)	
 {
     int client_sock = *((int *)para);
 	Node user;
@@ -17,65 +42,44 @@ int OffLine(void *para, int count, char **c_value, char **c_name)
 }
 
 
-void * Start(void *p)
+void start::Date_base()
 {
-	char *etc2 = "etc/temp.db";		//存放离线消息的数据库
-	char *msg;
-	sqlite3 *db2;
-
-    int p_flag;		//退出登录的标志位
-    int flag = SUCCESS;		//重复执行功能
-	int client_sock = *((int *)p);	//当前客户端的套结字
 	char buffer[BUFF_SIZE];
-	pNode temp;		
-	Node tmp;		//tmp保存是否被踢出功能的标志位
+	sqlite3_open(etc2,&db2);
+	sprintf(buffer,"select * from _%s",user->name);
+	sqlite3_exec(db2,buffer,OffLine,(void *)&client_sock,&msg);
+	memset(buffer,0,sizeof(buffer));
+	sprintf(buffer,"drop table _%s",user->name);
+	sqlite3_exec(db2,buffer,NULL,NULL,&msg);	//处理完毕后，销毁离线消息
+	sqlite3_close(db2);
 
-	Node pass;
+}
+
+int start::Direct(int client_stock)
+{
+	int flag = 1;		//重复执行功能
+	int p_flag;		//退出登录的标志位
+	Node tmp;		//tmp保存是否被踢出功能的标志位
 	tmp.action = 1;
-    
+
 	while(1)
-	{	
-		p_flag = 0;		//初始化
-		pass = Pass(client_sock);		//执行登录操作，返回用户登录的具体信息
-		if(pass.action == -1)		//退出操作
+	{
+		*user = pass(client_sock);
+		if(user.action == -1)		//退出操作
 		{
 		    break;
 		}
-
-		//将正确登录的用户加入到在线用户链表中
-		pNode user = (pNode)malloc(sizeof(Node));
-		strcpy(user->name,pass.name);
-		strcpy(user->id,pass.id);
 		user->sock = client_sock;
 		user->action = 1;
 		user->chat_flag = 1;
-		user->next = head->next;
-		head->next = user;
+		data.push_back(*user);
+		Date_base();
 
-		//打开离线消息数据库，查找，是否有该用户的离线消息
-		sqlite3_open(etc2,&db2);
-		sprintf(buffer,"select * from _%s",user->name);
-		sqlite3_exec(db2,buffer,OffLine,(void *)&client_sock,&msg);
-		memset(buffer,0,sizeof(buffer));
-		sprintf(buffer,"drop table _%s",user->name);
-		sqlite3_exec(db2,buffer,NULL,NULL,&msg);	//处理完毕后，销毁离线消息
-		sqlite3_close(db2);
 
-		
-		temp = head->next;
-		while(temp != NULL)		//找到当前用户的结点
+		while(flag == 1)		//具体功能入口
 		{
-			if(temp->sock == client_sock)
-			{
-				break;
-			}
-			temp = temp->next;
-		}
-
-		while(flag == SUCCESS)		//具体功能入口
-		{
-			write(client_sock,temp,sizeof(Node));	//将当前用户信息发送个客户端
-			if(strcmp(pass.name,"root") == 0)		//判断是否为超级用户
+			write(client_sock,user,sizeof(Node));	//将当前用户信息发送个客户端
+			if(strcmp(user->name,"root") == 0)		//判断是否为超级用户
 			{
 				p_flag = Select_func2(client_sock,&flag);	//执行具体功能
 				read(client_sock,&tmp,sizeof(Node));	//tmp保存是否被踢出功能的标志位
@@ -99,8 +103,8 @@ void * Start(void *p)
 		{
 		    break;
 		}
-		
 	}
 
-	return NULL;
+	return 0;
 }
+

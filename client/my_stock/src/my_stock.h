@@ -6,13 +6,14 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include "Abstract.h"
 //#include <string>	//c++好像把perror,exit,bzero都封装在里面
-class Client_Stock 
+class Client_Stock : AB_Function
 {
 public :
 	static Client_Stock* GetStock();
 	static void FreeStock();
-	int My_Connect();
+	int Function();
 
 	
 private :

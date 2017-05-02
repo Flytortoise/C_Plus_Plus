@@ -6,10 +6,12 @@ all : $(Target)
 
 mm:
 	cd main && $(MAKE)
+	cd Init && $(MAKE)
 	cd my_stock && $(MAKE)
 	cd Start && $(MAKE)
 mc:
 	cd main && $(MAKE) clean
+	cd Init && $(MAKE) clean
 	cd my_stock && $(MAKE) clean
 	cd Start && $(MAKE) clean
 

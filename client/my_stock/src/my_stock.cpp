@@ -20,7 +20,7 @@ Client_Stock :: Client_Stock()
 	serve_addr.sin_addr.s_addr = inet_addr("192.168.1.189");
 }
 
-int Client_Stock :: My_Connect()
+int Client_Stock :: Function()
 {
 	if(connect(client_stock,(struct sockaddr *)&serve_addr,sizeof(struct sockaddr_in)) < 0)		//链接服务器
     {
