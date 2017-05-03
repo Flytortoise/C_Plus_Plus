@@ -11,8 +11,8 @@ void Start(int);
 int main(int argc, char *argv[])
 {
 	Init::init();
-	AB_Function *my_client = Client_Stock::GetStock();
-	int client_stock = my_client->Function();
+	AB_Action *my_client = Client_Stock::GetStock();
+	int client_stock = my_client->Action();
 	cout << "client_stock = " << client_stock << endl; 
 	Start(client_stock);
 	Client_Stock::FreeStock();

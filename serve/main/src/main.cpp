@@ -15,10 +15,10 @@ int main(int argc, char *argv[])
 	
 	Init::init();
 
-	AB_Function * my_serve = Serve_Stock::GetStock();
+	AB_Action * my_serve = Serve_Stock::GetStock();
 	while(1)
 	{
-		client_stock = my_serve->Function();
+		client_stock = my_serve->Action();
 		cout << "client_stock = " << client_stock << endl; 
 		if(pthread_create(&client_tidp,NULL,Start,static_cast<void *>(&client_stock)) != 0)	//创建线程，单独为客户端工作
 		{
