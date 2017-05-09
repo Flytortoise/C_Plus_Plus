@@ -23,5 +23,13 @@ public :
 
 }
 
+class AB_Data
+{
+public :
+	virtual int Data() = 0;
+	virtual ~AB_Data();
+
+}
+
 
 #endif

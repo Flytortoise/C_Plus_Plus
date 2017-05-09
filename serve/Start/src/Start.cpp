@@ -8,7 +8,9 @@ using namespace std;
 start::start()
 {
 	char *etc2 = "etc/temp.db";
-	user = new Node();
+	user = Online_data::GetData();
+	pass = Pass::GetPass();
+	select = Select_func::GetSelect();
 }
 
 AB_Director * start::CreateStart()
@@ -26,6 +28,7 @@ void start::FreeStart()
 	if(my_start_ != NULL)
 	{
 		delete my_start_;
+		my_start_ = NULL;
 	}
 }
 
@@ -41,8 +44,7 @@ int start::OffLine(void *para, int count, char **c_value, char **c_name)
 	return 0;
 }
 
-
-void start::Date_base()
+void start::Date_base()	//数据库处理
 {
 	char buffer[BUFF_SIZE];
 	sqlite3_open(etc2,&db2);
@@ -64,7 +66,7 @@ int start::Direct(int client_stock)
 
 	while(1)
 	{
-		*user = pass(client_sock);
+		user = pass->Action(client_sock);
 		if(user.action == -1)		//退出操作
 		{
 		    break;
@@ -72,7 +74,7 @@ int start::Direct(int client_stock)
 		user->sock = client_sock;
 		user->action = 1;
 		user->chat_flag = 1;
-		data.push_back(*user);
+		OnlinePeople.push_back(*user);
 		Date_base();
 
 
@@ -81,7 +83,7 @@ int start::Direct(int client_stock)
 			write(client_sock,user,sizeof(Node));	//将当前用户信息发送个客户端
 			if(strcmp(user->name,"root") == 0)		//判断是否为超级用户
 			{
-				p_flag = Select_func2(client_sock,&flag);	//执行具体功能
+				p_flag = select->Select_func2(client_sock,&flag);	//执行具体功能
 				read(client_sock,&tmp,sizeof(Node));	//tmp保存是否被踢出功能的标志位
 				if(p_flag == -1 || tmp.flag == 0)		//执行退出登录或者被管理员提出，则回到用户登录
 				{
@@ -90,7 +92,7 @@ int start::Direct(int client_stock)
 			}
 			else
 			{
-				p_flag = Select_func(client_sock,&flag);	//执行具体功能
+				p_flag = select->Select_func(client_sock,&flag);	//执行具体功能
 				read(client_sock,&tmp,sizeof(Node));	//tmp保存是否被踢出功能的标志位
 				if(p_flag == -1 || tmp.flag == 0)		//执行退出登录或者被管理员提出，则回到用户登录
 				{

@@ -8,7 +8,11 @@ using namespace std;
 
 start::start()
 {
-	user = new Node();
+	user = Online_data::GetData();
+	pass = Pass::GetPass();
+	select = Select_func::GetSelect();
+	interface = Interface::GetInterface();
+
 	move = 1;	//是否被踢出标志位，被踢出时为0
 	kong = 1;
 	pipe(fd);
@@ -29,10 +33,11 @@ void start::FreeStart()
 	if(my_start_ != NULL)
 	{
 		delete my_start_;
+		my_start_ = NULL;
 	}
 }
 
-void start::Data_base(int action, Node & users)
+void start::Data_base(int action, Node & users)	//数据库操作
 {
 	time(&timep);
 	time_save = ctime(&timep);
@@ -46,7 +51,7 @@ void start::Data_base(int action, Node & users)
 	sqlite3_close(db);
 }
 
-void start::SendText(Node &users)
+void start::SendText(Node &users)	//发送文件
 {
 	int i = 0;
 	char ch;
@@ -60,7 +65,7 @@ void start::SendText(Node &users)
 	fclose(fp);
 }
 
-void * start::Son(void *p)	
+void * start::Son(void *p)	//读线程
 {
 
 	int client_sock = *((int *)p);
@@ -138,7 +143,7 @@ int start::Direct(int client_stock)
 
 	while(1)
 	{
-		*user = Pass(client_sock);	//进行密码登录操作，登录成功则返回登录用户的信息
+		user = pass->Action(client_sock);	//进行密码登录操作，登录成功则返回登录用户的信息
 		strcpy(id,user->id);
 
 		if(user->action != 1)	//用户退出登录
@@ -157,10 +162,10 @@ int start::Direct(int client_stock)
 				if(one == 1)
 				{
 					one--;
-					interface_main2(user->name);		//打印一次功能界面
+					interface->Action2(user->name);		//打印一次功能界面
 				}
 
-				p_flag = Select_func2(client_sock,&flag,user->name);		//执行具体功能
+				p_flag = select->Action2(client_sock,&flag,user->name);		//执行具体功能
 				
 				if(move == 0)		//判断是否被踢出
 				{
@@ -187,10 +192,10 @@ int start::Direct(int client_stock)
 				if(one == 1)
 				{
 					one--;
-					interface_main(user->name);		//打印一次功能选择界面
+					interface->Action(user->name);		//打印一次功能选择界面
 				}
 
-				p_flag = Select_func(client_sock,&flag,user->name);	//执行具体功能
+				p_flag = select->Action(client_sock,&flag,user->name);	//执行具体功能
 
 				if(move == 0)		//判断是否被管理员踢出
 				{
