@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include "interface.h"
 
-Interface::Interface()
-{
+int AB_Interface::Action(){}
+int AB_Interface::Action(int t){}
+void AB_Interface::Action_pass(){}
+void AB_Interface::Action(char *){}
+void AB_Interface::Action2(char *){}
 
-}
 
-Interface * GetInterface()
+Interface::Interface(){}
+
+Interface * Interface::GetInterface()
 {
 	if(interface_ == NULL)
 	{
@@ -15,7 +19,7 @@ Interface * GetInterface()
 	return interface_;
 }
 
-void FreeInterface()
+void Interface::FreeInterface()
 {
 	if(interface_ != NULL)
 	{

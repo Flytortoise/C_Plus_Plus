@@ -54,6 +54,11 @@ int Serve_Stock :: Action()
 	return client_stock;
 }
 
+int Serve_Stock ::  Action(int t)
+{
+	Action();
+}
+
 Serve_Stock* Serve_Stock::GetStock()
 {
 	if(serve == NULL)

@@ -12,7 +12,7 @@ mm:
 	cd my_stock && $(MAKE)
 	cd Start && $(MAKE)
 	cd Pass && $(MAKE)
-	cd my_scand && $(MAKE)
+	cd my_scanf && $(MAKE)
 	cd interface && $(MAKE)
 	cd Select_func && $(MAKE)
 mc:

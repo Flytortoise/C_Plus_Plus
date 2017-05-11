@@ -1,6 +1,7 @@
 //自写版本
 //2017年2月8日 08:56:38
 #include <stdio.h>
+#include <stdio_ext.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <termios.h>
@@ -9,10 +10,13 @@
 
 #define SUCCESS 1
 
-MyScanf::MyScanf()
-{
 
-}
+
+int AB_Scanf::Action(char s[], int len){}
+int MyScanf::Action(){}
+int MyScanf::Action(int t){}
+
+MyScanf::MyScanf(){}
 
 MyScanf * MyScanf::GetScanf()
 {

@@ -7,13 +7,17 @@
 #define BUFF_SIZE 100
 #define SEND_SIZE 100
 
+#include "Abstract.h"
+
 class Online_data : public AB_Data		//通信的交互数据
 {
 
-static Online_data* GetData();
-static void FreeData();
-
 public :
+	Online_data();
+	static Online_data * data;
+	static Online_data* GetData();
+	static void FreeData();
+
 	int action;
     int sock;
 	int flag;
@@ -26,8 +30,8 @@ public :
 	char buffer[BUFF_SIZE];
 	char send[SEND_SIZE];
 private :
-	Online_data();
-	static Online_data * data;
+	
+	
 };
 
 typedef class Online_data Node;

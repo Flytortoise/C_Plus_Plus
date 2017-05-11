@@ -5,37 +5,47 @@
 #include "Select_func.h"
 #include "Data.h"
 
+
+int Select_Direct::Direct(int t, int *) {}
+int Select_Direct::Direct2(int t, int *) {}
+
+
 Select::Select()
 {
 
 }
 
-Select * GetSelect()
+Select * Select::GetSelect()
 {
-	if(Select_ == NULL)
+	if(select_ == NULL)
 	{
-		Select_ = new Select;
+		select_ = new Select();
 	}
-	return Select_;
+	return select_;
 }
 
-void FreeSelect()
+void Select::FreeSelect()
 {
-	if(Select_ != NULL)
+	if(select_ != NULL)
 	{
-		delete Select_;
-		Select_ = NULL;
+		delete select_;
+		select_ = NULL;
 	}
 }
 
-int Select::Action(int client_sock,int *flag,char *name)
+int Select::Direct(int client_sock,int *flag)
 {
-	printf("Action\n");
+	printf("Direct\n");
 }
 
 
 //超级用户功能
-int Select::Action2(int client_sock,int *flag,char *name)
+int Select::Direct2(int client_sock,int *flag)
 {
-	printf("Action2\n");
+	printf("Direct2\n");
+}
+
+int Select::Direct(int t)
+{
+
 }

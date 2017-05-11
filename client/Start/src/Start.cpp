@@ -6,11 +6,19 @@
 
 using namespace std;
 
+char id[ID_SIZE];
+int fd[2];		//线程通信管道
+int move ;	//是否被踢出标志位，被踢出时为0
+int kong ;
+pthread_t pid;
+
+sqlite3 * start::db;
+
 start::start()
 {
 	user = Online_data::GetData();
 	pass = Pass::GetPass();
-	select = Select_func::GetSelect();
+	select = Select::GetSelect();
 	interface = Interface::GetInterface();
 
 	move = 1;	//是否被踢出标志位，被踢出时为0
@@ -18,7 +26,7 @@ start::start()
 	pipe(fd);
 }
 
-AB_Director * start::CreateStart()
+start * start::CreateStart()
 {
 	if(my_start_ == NULL )
 	{
@@ -37,22 +45,30 @@ void start::FreeStart()
 	}
 }
 
-void start::Data_base(int action, Node & users)	//数据库操作
+void Data_base(int action, Node & users)	//数据库操作
 {
+	time_t timep;
+	char *time_save;
+	char etc[BUFF_SIZE];
+	char buffer[BUFF_SIZE];
+	char *msg;
+
 	time(&timep);
 	time_save = ctime(&timep);
 	memset(buffer,0,sizeof(buffer));
-	sqlite3_open(etc,&db);
+	sqlite3_open(etc,&start::db);
 	sprintf(buffer,"create table _%s(time text, name text,buffer text,flag text)",id);
-	sqlite3_exec(db,buffer,NULL,NULL,&msg);
+	sqlite3_exec(start::db,buffer,NULL,NULL,&msg);
 	memset(buffer,0,sizeof(buffer));
 	sprintf(buffer,"insert into _%s(time,name,buffer,flag) values ('%s','%s','%s','%d')",id,time_save,users.name,users.buffer,action);
-	sqlite3_exec(db,buffer,NULL,NULL,&msg);
-	sqlite3_close(db);
+	sqlite3_exec(start::db,buffer,NULL,NULL,&msg);
+	sqlite3_close(start::db);
 }
 
-void start::SendText(Node &users)	//发送文件
+void SendText(Node &users)	//发送文件
 {
+	char buffer[BUFF_SIZE];
+
 	int i = 0;
 	char ch;
 	FILE *fp = fopen(users.buffer,"w+");;
@@ -65,16 +81,21 @@ void start::SendText(Node &users)	//发送文件
 	fclose(fp);
 }
 
-void * start::Son(void *p)	//读线程
-{
 
-	int client_sock = *((int *)p);
+void * Son(void *p)	//读线程
+{
+	char etc[BUFF_SIZE];
+	char buffer[BUFF_SIZE];
+	
+	char *msg;
+
+	int client_stock = *((int *)p);
 	int n_read;
 	Node users;
 
 	while(1)
 	{
-		n_read = read(client_sock,&users,sizeof(users));		//循环从服务器读取数据
+		n_read = read(client_stock,&users,sizeof(users));		//循环从服务器读取数据
 		memset(etc,0,sizeof(etc));
 		sprintf(etc,"etc/_%s.db",id);
 		if(n_read == 0)
@@ -135,15 +156,18 @@ void * start::Son(void *p)	//读线程
 
 int start::Direct(int client_stock)
 {
+	char etc[BUFF_SIZE];
+	char buffer[BUFF_SIZE];
+	char *msg;
 	int p_flag = 0;
     int flag = 1;
 	int one = 0;
 
-	pthread_create(&pid,NULL,Son,static_cast<void *>(&client_sock));		//创建读线程
+	pthread_create(&pid,NULL,Son,static_cast<void *>(&client_stock));		//创建读线程
 
 	while(1)
 	{
-		user = pass->Action(client_sock);	//进行密码登录操作，登录成功则返回登录用户的信息
+		pass->Action(client_stock);	//进行密码登录操作，登录成功则返回登录用户的信息
 		strcpy(id,user->id);
 
 		if(user->action != 1)	//用户退出登录
@@ -165,7 +189,7 @@ int start::Direct(int client_stock)
 					interface->Action2(user->name);		//打印一次功能界面
 				}
 
-				p_flag = select->Action2(client_sock,&flag,user->name);		//执行具体功能
+				p_flag = select->Direct2(client_stock,&flag,user->name);		//执行具体功能
 				
 				if(move == 0)		//判断是否被踢出
 				{
@@ -175,7 +199,7 @@ int start::Direct(int client_stock)
 				{
 				    user->flag = 1;
 				}
-				write(client_sock,user,sizeof(Node));
+				write(client_stock,user,sizeof(Node));
 				
 				if(p_flag == -1 || move == 0)
 				{
@@ -195,7 +219,7 @@ int start::Direct(int client_stock)
 					interface->Action(user->name);		//打印一次功能选择界面
 				}
 
-				p_flag = select->Action(client_sock,&flag,user->name);	//执行具体功能
+				p_flag = select->Direct(client_stock,&flag,user->name);	//执行具体功能
 
 				if(move == 0)		//判断是否被管理员踢出
 				{
@@ -205,7 +229,7 @@ int start::Direct(int client_stock)
 				{
 				    user->flag = 1;
 				}
-				write(client_sock,user,sizeof(Node));	//将是否被踢出信息，发送给服务器
+				write(client_stock,user,sizeof(Node));	//将是否被踢出信息，发送给服务器
 
 				if(p_flag == -1 || move == 0)	//被踢出或执行退出登录
 				{
@@ -222,5 +246,10 @@ int start::Direct(int client_stock)
 
 	close(fd[0]);
 	return 0;
+}
+
+int start::Direct()
+{
+
 }
 

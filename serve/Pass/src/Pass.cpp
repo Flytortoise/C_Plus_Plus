@@ -36,7 +36,7 @@ void Pass::FreePass()
 	if(pass_ != NULL)
 	{
 		delete pass_;
-		pass_ = NULL
+		pass_ = NULL;
 	}
 }
 
@@ -60,7 +60,7 @@ void Pass::Num2Str(int Num, char Str[])
 	}
 }
 
-int Pass::Callback1(void *para, int count, char **c_value,char **c_name)	//检测有无信息
+int Callback1(void *para, int count, char **c_value,char **c_name)	//检测有无信息
 {
  	if(count != 0)
 	{
@@ -70,24 +70,24 @@ int Pass::Callback1(void *para, int count, char **c_value,char **c_name)	//检�
 	return 0;
 }
 
-int Pass::Callback(void *para, int count, char **c_value,char **c_name)	//检测有无信息，并获取用户昵称
+int Callback(void *para, int count, char **c_value,char **c_name)	//检测有无信息，并获取用户昵称
 {
-	pNode pass = (pNode)para;
+	//pNode pass = reinterpret_cast<pNode>(para);
     if(count != 0)
 	{
-	    strcpy(pass->name,c_value[0]);
+	  //  strcpy(pass->name,c_value[0]);
 	    return 1;
 	}
 
 	return  0;
 }
 
-int Pass::Online_(char id[])
+int Online_(char id[])
 {
 	vector<Node>::iterator t = start::OnlinePeople.begin();
 	while(t != start::OnlinePeople.end())
 	{
-		if(strcmp(t.id,id) == 0)
+		if(strcmp(t->id,id) == 0)
 		{
 			return 1;	//在线
 		}
@@ -97,7 +97,7 @@ int Pass::Online_(char id[])
 	return 0;	//不在线
 }
 
-AB_Data Pass::Action(int client_sock)
+int Pass::Action(int client_sock)
 {
 
 	while(1)
@@ -113,17 +113,17 @@ AB_Data Pass::Action(int client_sock)
 
 			online_flag = Online_(pass->id);
 
-			if(online == 0)	//非在线状态，则正常登录
+			if(online_flag == 0)	//非在线状态，则正常登录
 			{
 		    	memset(buffer,0,sizeof(buffer));
 				sprintf(buffer,"select name from user where id = '%s' AND password = '%s'",pass->id,pass->password);
-				select_flag = sqlite3_exec(db,buffer,Callback,(void *)(pass),&msg);
+				select_flag = sqlite3_exec(db,buffer,Callback,NULL,&msg);
 				if(select_flag != 0)		//存在该信息
 				{
 				    pass->action = 1;
 					write(client_sock,pass,sizeof(*pass));	//登录成功
 					sqlite3_close(db);
-					return pass;
+					//return pass;
 				}
 				else
 				{
@@ -149,7 +149,7 @@ AB_Data Pass::Action(int client_sock)
 			{
 				memset(buffer,0,sizeof(buffer));
 				sprintf(buffer,"select * from user where name = '%s'",pass->name);	//查找用户名是否重复
-				select_flag = sqlite3_exec(db,buffer,Callback,(void *)(pass),&msg);
+				select_flag = sqlite3_exec(db,buffer,Callback,NULL,&msg);
 				if(select_flag == 0)		//该用户名未注册
 				{
 				    do
@@ -172,7 +172,7 @@ AB_Data Pass::Action(int client_sock)
 				}
 				else
 				{
-				    pass.action = 4; 	//帐户已存在
+				    pass->action = 4; 	//帐户已存在
 					write(client_sock,pass,sizeof(*pass));
 				}
 			}
@@ -180,8 +180,9 @@ AB_Data Pass::Action(int client_sock)
 			{
 				pass->action = -1;
 				sqlite3_close(db);
-			    return pass;
+			    //return pass;
 			}
 		}
 	}
 }
+

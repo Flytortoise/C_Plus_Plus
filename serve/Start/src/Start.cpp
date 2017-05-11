@@ -3,6 +3,7 @@
 #include <string.h>
 #include <iostream>
 
+
 using namespace std;
 
 start::start()
@@ -10,14 +11,16 @@ start::start()
 	char *etc2 = "etc/temp.db";
 	user = Online_data::GetData();
 	pass = Pass::GetPass();
-	select = Select_func::GetSelect();
+	select = Select::GetSelect();
 }
 
-AB_Director * start::CreateStart()
+vector <Online_data> start::OnlinePeople;
+
+start * start::CreateStart()
 {
 	if(my_start_ == NULL )
 	{
-		my_start_ = new start;		
+		my_start_ = new start();		
 	}
 
 	return my_start_;
@@ -32,28 +35,28 @@ void start::FreeStart()
 	}
 }
 
-int start::OffLine(void *para, int count, char **c_value, char **c_name)	
+int OffLine(void *para, int count, char **c_value, char **c_name)	
 {
     int client_sock = *((int *)para);
-	Node user;
-	bzero(&user,sizeof(user));
-	strcpy(user.name,c_value[0]);
-	strcpy(user.buffer,c_value[1]);
-	user.action = -5;
-	write(client_sock,&user,sizeof(user));		//存在离线消息，则发送给该用户
+	Online_data * user = Online_data::GetData();
+	bzero(user,sizeof(*user));
+	strcpy(user->name,c_value[0]);
+	strcpy(user->buffer,c_value[1]);
+	user->action = -5;
+	write(client_sock,user,sizeof(*user));		//存在离线消息，则发送给该用户
 	return 0;
 }
 
-void start::Date_base()	//数据库处理
+void start::Date_base(int client_stock)	//数据库处理
 {
 	char buffer[BUFF_SIZE];
-	sqlite3_open(etc2,&db2);
+	sqlite3_open(etc2_,&db2_);
 	sprintf(buffer,"select * from _%s",user->name);
-	sqlite3_exec(db2,buffer,OffLine,(void *)&client_sock,&msg);
+	sqlite3_exec(db2_,buffer,OffLine,(void *)&client_stock,&msg_);
 	memset(buffer,0,sizeof(buffer));
 	sprintf(buffer,"drop table _%s",user->name);
-	sqlite3_exec(db2,buffer,NULL,NULL,&msg);	//处理完毕后，销毁离线消息
-	sqlite3_close(db2);
+	sqlite3_exec(db2_,buffer,NULL,NULL,&msg_);	//处理完毕后，销毁离线消息
+	sqlite3_close(db2_);
 
 }
 
@@ -66,25 +69,25 @@ int start::Direct(int client_stock)
 
 	while(1)
 	{
-		user = pass->Action(client_sock);
-		if(user.action == -1)		//退出操作
+		pass->Action(client_stock);
+		if(user->action == -1)		//退出操作
 		{
 		    break;
 		}
-		user->sock = client_sock;
+		user->sock = client_stock;
 		user->action = 1;
 		user->chat_flag = 1;
-		OnlinePeople.push_back(*user);
-		Date_base();
+		my_start_->OnlinePeople.push_back(*user);
+		Date_base(client_stock);
 
 
 		while(flag == 1)		//具体功能入口
 		{
-			write(client_sock,user,sizeof(Node));	//将当前用户信息发送个客户端
+			write(client_stock,user,sizeof(Node));	//将当前用户信息发送个客户端
 			if(strcmp(user->name,"root") == 0)		//判断是否为超级用户
 			{
-				p_flag = select->Select_func2(client_sock,&flag);	//执行具体功能
-				read(client_sock,&tmp,sizeof(Node));	//tmp保存是否被踢出功能的标志位
+				p_flag = select->Direct2(client_stock,&flag);	//执行具体功能
+				read(client_stock,&tmp,sizeof(Node));	//tmp保存是否被踢出功能的标志位
 				if(p_flag == -1 || tmp.flag == 0)		//执行退出登录或者被管理员提出，则回到用户登录
 				{
 				    break;
@@ -92,8 +95,8 @@ int start::Direct(int client_stock)
 			}
 			else
 			{
-				p_flag = select->Select_func(client_sock,&flag);	//执行具体功能
-				read(client_sock,&tmp,sizeof(Node));	//tmp保存是否被踢出功能的标志位
+				p_flag = select->Direct(client_stock,&flag);	//执行具体功能
+				read(client_stock,&tmp,sizeof(Node));	//tmp保存是否被踢出功能的标志位
 				if(p_flag == -1 || tmp.flag == 0)		//执行退出登录或者被管理员提出，则回到用户登录
 				{
 				    break;

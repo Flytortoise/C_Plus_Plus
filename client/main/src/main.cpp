@@ -8,6 +8,14 @@ using namespace std;
 
 void Start(int);
 
+Client_Stock * Client_Stock::client = NULL;
+start * start::my_start_ = NULL;
+Online_data * Online_data::data = NULL;
+Pass * Pass::pass_ = NULL;
+MyScanf *MyScanf::scanf_ = NULL;
+Interface *Interface::interface_ = NULL;
+Select *Select::select_ = NULL;
+
 int main(int argc, char *argv[])
 {
 	Init::init();

@@ -2,23 +2,25 @@
 #define PASS_H_
 
 #include "Abstract.h"
+#include "interface.h"
 #include "Data.h"
+#include "my_scanf.h"
 
 class Pass : public AB_Action
 {
 
-static Pass * pass_;
-static Pass * GetPass();
-static void FreePass();
-
 public:
-	AB_Data Action(int client_sock);
+	static Pass * pass_;
+	static Pass * GetPass();
+	static void FreePass();
+	int Action();
+	int Action(int client_sock);
 private:
 	Pass();
-	AB_Action * interface;
-	AB_Action * my_scanf;	
+	AB_Interface * interface;
+	AB_Scanf * my_scanf;	
 
-	AB_Data *pass;		//返回的信息
+	Online_data *pass;		//返回的信息
 };
 
 

@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <strings.h>
 
+int Client_Stock::Action(int t){}
+
 Client_Stock :: Client_Stock()
 {
 	client_stock = socket(AF_INET,SOCK_STREAM,0);	//创建客户端的套接字

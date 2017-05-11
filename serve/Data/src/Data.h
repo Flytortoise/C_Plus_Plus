@@ -1,6 +1,8 @@
 #ifndef DATA_H_
 #define DATA_H_
 
+#include "Abstract.h"
+
 #define ACC_SIZE 20
 #define PASS_SIZE 20
 #define ID_SIZE 5
@@ -9,10 +11,6 @@
 
 class Online_data : public AB_Data		//通信的交互数据
 {
-
-static Online_data* GetData();
-static void FreeData();
-
 public :
 	int action;
     int sock;
@@ -25,9 +23,17 @@ public :
 	char password[PASS_SIZE];
 	char buffer[BUFF_SIZE];
 	char send[SEND_SIZE];
-private :
-	Online_data();
+
+	static Online_data* GetData();
+	static void FreeData();
 	static Online_data * data;
+
+	~Online_data();
+	Online_data();
+
+private :
+	
+
 };
 
 typedef class Online_data Node;

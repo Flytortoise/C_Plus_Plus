@@ -1,7 +1,7 @@
 #include "Init.h"
 #include "my_stock.h"
 #include "Start.h"
-#include "Date.h"
+#include "Data.h"
 #include "my_scanf.h"
 #include "Pass.h"
 #include "interface.h"
@@ -9,6 +9,7 @@
 
 void Init::init()
 {
+/*
 	Client_Stock * Client_Stock::client = NULL;
 	start * start::my_start_ = NULL;
 	Online_data * Online_data::data = NULL;
@@ -16,4 +17,6 @@ void Init::init()
 	MyScanf *MyScanf::scanf_ = NULL;
 	Interface *Interface::interface_ = NULL;
 	Select *Select::select_ = NULL;
+	*/
 }
+

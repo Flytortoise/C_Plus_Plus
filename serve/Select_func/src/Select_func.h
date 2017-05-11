@@ -1,20 +1,28 @@
 #ifndef SELECT_FUNC
 #define SELECT_FUNC
 
-#include "Abstartc.h"
+#include "Abstract.h"
 
-class Select : public AB_Action
+using namespace std;
+
+class Select_Direct : public AB_Director
 {
-
-static Select *select_ ;
-static Select * GetSelect();
-static void FreeSelect();
-
 public :
-	int Action(int ,int *,char *);
-	int Action2(int ,int *,char *);
+	virtual int Direct(int t, int *);
+	virtual int Direct2(int t, int *);
+};
+
+class Select : public Select_Direct
+{
+public :
+	static Select *select_ ;
+	static Select * GetSelect();
+	static void FreeSelect();
+	virtual int Direct(int t, int *);
+	virtual int Direct2(int t, int *);
 private :
 	Select();
+	int Direct(int t);
 
 };
 

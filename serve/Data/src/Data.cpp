@@ -1,9 +1,15 @@
-
-#include "Date.h"
+#include "Data.h"
+#include <stdio.h>
+using namespace std;
 
 Online_data::Online_data()
 {
 
+}
+
+Online_data::~Online_data()
+{
+	
 }
 
 Online_data* Online_data::GetData()
@@ -24,3 +30,4 @@ void Online_data::FreeData()
 		data = NULL;
 	}
 }
+

@@ -9,11 +9,11 @@
 
 
 using namespace std;
-
+extern int fd[2];		//线程通信管道
 Pass::Pass()
 {
 	pass = Online_data::GetData();
-	interface = interface::GetInterface();
+	interface = Interface::GetInterface();
 	my_scanf = MyScanf::GetScanf();	
 	interface = NULL;
 	my_scanf = NULL;
@@ -34,12 +34,13 @@ void Pass::FreePass()
 	if(pass_ != NULL)
 	{
 		delete pass_;
-		pass_ = NULL
+		pass_ = NULL;
 	}
 }
 
+int Pass::Action(){}
 
-AB_Data Pass::Action(int client_sock)
+int Pass::Action(int client_sock)
 {
 	int i = 1;
 	while(1)
@@ -47,13 +48,13 @@ AB_Data Pass::Action(int client_sock)
 		if(i == 1)
 		{
 			system("clear");
-    		interface->Action_Pass();	//打印一次用户登录界面
+    		interface->Action_pass();	//打印一次用户登录界面
 			i--;
 		}
 
 		printf("请输入要执行的操作:");
 		scanf("%d",&pass->action);
-		if(pass.action == 1)		//登录操作
+		if(pass->action == 1)		//登录操作
 		{
 		    printf("帐号:");
 			scanf("%s",pass->id);
@@ -74,19 +75,19 @@ AB_Data Pass::Action(int client_sock)
 			else		//退出操作
 			{
 			    write(client_sock,pass,sizeof(*pass));
-				return pass;		//退出直接返回
+				//return pass;		//退出直接返回
 			}
 		}
 	
 		read(fd[0],pass,sizeof(*pass));		//读取服务器处理后的结果
 		system("clear");
-		interface->Action_Pass();
+		interface->Action_pass();
 		switch(pass->action)
 		{
 		    case 1:
 		    {
 				printf("登录成功!\n");
-				return pass;
+				//return pass;
 			}break;
 	
 			case 2:
@@ -117,3 +118,4 @@ AB_Data Pass::Action(int client_sock)
 		}
 	}	
 }
+

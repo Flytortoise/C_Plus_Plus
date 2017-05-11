@@ -8,12 +8,13 @@
 #include <netinet/in.h>
 #include "Abstract.h"
 //#include <string>	//c++好像把perror,exit,bzero都封装在里面
-class Client_Stock : AB_Action
+class Client_Stock : public AB_Action
 {
 public :
 	static Client_Stock* GetStock();
 	static void FreeStock();
 	int Action();
+	int Action(int t);
 
 	
 private :

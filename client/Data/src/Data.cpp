@@ -1,5 +1,6 @@
 
 #include "Data.h"
+#include <stdio.h>
 
 Online_data::Online_data()
 {

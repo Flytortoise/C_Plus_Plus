@@ -8,32 +8,36 @@
 #include "Select_func.h"
 #include "Data.h"
 
+using namespace std;
+
 class start : public AB_Director
 {
 public :
 	static start * CreateStart();
 	static void FreeStart();
 	static start * my_start_;
-
 	int Direct(int client_stock);
+
+	static vector <Online_data> OnlinePeople;
 
 private :
 	start();
-	void Date_base();
-	int OffLine(void *para, int count, char **c_value, char **c_name);
+	void Date_base(int client_stock);
+	//int OffLine(void *para, int count, char **c_value, char **c_name);
 
 	char *etc2_;
 	char *msg_;
 	sqlite3 *db2_;
 
-	AB_Data *user;
+	Online_data *user;
 
-	static vector<Node> OnlinePeople;
+
 
 	AB_Action *pass;
-	AB_Action *select;
+	Select_Direct *select;
 };
 
 
 
 #endif 
+
