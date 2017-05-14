@@ -1,7 +1,7 @@
 include ../../scripts/Makefile
 
 all :
-	gcc -c src/Exit_Log.c -I ../../Pass/src/ -o src/Exit_Log.o
+	g++ -c src/Look.cpp -I src/ -I ../../Data/src/ -I ../../Select_func/src/ -I ../../Pass/src/ -I ../../Start/src/ -I ../../Abstract/src/ -o src/Look.o
 
 clean :
-	rm -f src/Exit_Log.o
+	rm -f src/Look.o

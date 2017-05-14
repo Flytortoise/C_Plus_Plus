@@ -8,6 +8,9 @@
 #include "Pass.h"
 #include "Select_func.h"
 
+extern int fd[2];		//线程通信管道
+extern char id[ID_SIZE];
+
 class start : public AB_Director
 {
 public :
@@ -27,8 +30,6 @@ private :
 	//void Data_base(int , Node &);
 	//void SendText(Node &);
 	
-	
-
 	Online_data *user;
 
 	AB_Action *pass;

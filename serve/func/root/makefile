@@ -1,7 +1,7 @@
 include ../../scripts/Makefile
 
 all :
-	gcc -c src/root.c -I ../../Pass/src -o src/root.o
+	g++ -c src/root.cpp -I ../../Abstract/src -o src/root.o
 
 clean :
 	rm -f src/root.o

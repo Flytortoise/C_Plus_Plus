@@ -8,8 +8,8 @@ using namespace std;
 
 char id[ID_SIZE];
 int fd[2];		//线程通信管道
-int move ;	//是否被踢出标志位，被踢出时为0
-int kong ;
+int move = 1;	//是否被踢出标志位，被踢出时为0
+int kong = 1;
 pthread_t pid;
 
 sqlite3 * start::db;
@@ -21,9 +21,7 @@ start::start()
 	select = Select::GetSelect();
 	interface = Interface::GetInterface();
 
-	move = 1;	//是否被踢出标志位，被踢出时为0
-	kong = 1;
-	pipe(fd);
+	
 }
 
 start * start::CreateStart()
@@ -163,8 +161,11 @@ int start::Direct(int client_stock)
     int flag = 1;
 	int one = 0;
 
-	pthread_create(&pid,NULL,Son,static_cast<void *>(&client_stock));		//创建读线程
 
+	pipe(fd);
+
+	pthread_create(&pid,NULL,Son,static_cast<void *>(&client_stock));		//创建读线程
+	//printf("start1\n");
 	while(1)
 	{
 		pass->Action(client_stock);	//进行密码登录操作，登录成功则返回登录用户的信息

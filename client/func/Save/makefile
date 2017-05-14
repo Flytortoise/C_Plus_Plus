@@ -1,7 +1,7 @@
 include ../../scripts/Makefile
 
 all :
-	gcc -c src/Save.c -I ../../Pass/src -o src/Save.o
+	g++ -c src/Look.cpp -I src/ -I ../../Select_func/src/ -I ../../interface/src/ -I ../../my_scanf/src/ -I ../../Pass/src/ -I ../../Data/src/ -I ../../Start/src/ -I ../../Abstract/src/ -o src/Look.o
 
 clean :
-	rm -f src/Save.o
+	rm -f src/Look.o

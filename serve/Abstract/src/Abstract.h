@@ -20,7 +20,8 @@ public :
 class AB_Function
 {
 public :
-	virtual int Function() = 0;
+	virtual int Function(int t) = 0;
+	virtual int Function();
 	virtual ~AB_Function();
 
 };

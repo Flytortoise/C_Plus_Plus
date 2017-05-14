@@ -66,7 +66,7 @@ int start::Direct(int client_stock)
 	int p_flag;		//退出登录的标志位
 	Node tmp;		//tmp保存是否被踢出功能的标志位
 	tmp.action = 1;
-
+	//printf("start1\n");
 	while(1)
 	{
 		pass->Action(client_stock);

@@ -72,10 +72,10 @@ int Callback1(void *para, int count, char **c_value,char **c_name)	//检测有�
 
 int Callback(void *para, int count, char **c_value,char **c_name)	//检测有无信息，并获取用户昵称
 {
-	//pNode pass = reinterpret_cast<pNode>(para);
+	Online_data * pass = Online_data::GetData();
     if(count != 0)
 	{
-	  //  strcpy(pass->name,c_value[0]);
+	    strcpy(pass->name,c_value[0]);
 	    return 1;
 	}
 
@@ -99,7 +99,6 @@ int Online_(char id[])
 
 int Pass::Action(int client_sock)
 {
-
 	while(1)
 	{
 		bzero(pass,sizeof(*pass));
@@ -123,7 +122,7 @@ int Pass::Action(int client_sock)
 				    pass->action = 1;
 					write(client_sock,pass,sizeof(*pass));	//登录成功
 					sqlite3_close(db);
-					//return pass;
+					return 1;
 				}
 				else
 				{
@@ -141,7 +140,12 @@ int Pass::Action(int client_sock)
 						write(client_sock,pass,sizeof(*pass));
 					}
 				}
-			}	
+			}
+			else
+			{
+				pass->action = 6;
+				write(client_sock,pass,sizeof(*pass));
+			}
 		}
 		else
 		{
@@ -180,7 +184,7 @@ int Pass::Action(int client_sock)
 			{
 				pass->action = -1;
 				sqlite3_close(db);
-			    //return pass;
+			    return 0;
 			}
 		}
 	}

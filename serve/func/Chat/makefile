@@ -1,7 +1,7 @@
 include ../../scripts/Makefile
 
 all :
-	gcc -c src/Chat.c -I ../../Pass/src -o src/Chat.o
+	g++ -c src/Chat.cpp -I src/ -I ../../Data/src/ -I ../../Select_func/src/ -I ../../Pass/src/ -I ../../Start/src/ -I ../../Abstract/src/ -o src/Chat.o
 
 clean :
-	rm -f src/Chat.o
+	rm -f src/*.o

@@ -15,8 +15,6 @@ Pass::Pass()
 	pass = Online_data::GetData();
 	interface = Interface::GetInterface();
 	my_scanf = MyScanf::GetScanf();	
-	interface = NULL;
-	my_scanf = NULL;
 }
 
 Pass * Pass::GetPass()
@@ -43,6 +41,8 @@ int Pass::Action(){}
 int Pass::Action(int client_sock)
 {
 	int i = 1;
+
+	//printf("Pass1\n");
 	while(1)
 	{	
 		if(i == 1)
@@ -75,7 +75,7 @@ int Pass::Action(int client_sock)
 			else		//退出操作
 			{
 			    write(client_sock,pass,sizeof(*pass));
-				//return pass;		//退出直接返回
+				return 0;		//退出直接返回
 			}
 		}
 	
@@ -87,7 +87,7 @@ int Pass::Action(int client_sock)
 		    case 1:
 		    {
 				printf("登录成功!\n");
-				//return pass;
+				return 1;
 			}break;
 	
 			case 2:

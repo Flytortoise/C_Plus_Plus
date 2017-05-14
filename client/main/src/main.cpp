@@ -15,6 +15,7 @@ Pass * Pass::pass_ = NULL;
 MyScanf *MyScanf::scanf_ = NULL;
 Interface *Interface::interface_ = NULL;
 Select *Select::select_ = NULL;
+//Look * Look::look_ = NULL;
 
 int main(int argc, char *argv[])
 {

@@ -23,7 +23,7 @@ public :
 private :
 	Select();
 	int Direct(int t);
-
+	AB_Function * Func;
 };
 
 

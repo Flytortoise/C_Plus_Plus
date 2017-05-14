@@ -21,6 +21,7 @@ public :
 	static Interface *interface_;
 	static Interface * GetInterface();
 	static void FreeInterface();
+	
 	void Action_pass();
 	void Action(char *);
 	void Action2(char *);
