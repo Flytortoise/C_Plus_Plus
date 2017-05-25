@@ -1,3 +1,4 @@
+#include <iostream>
 #include <stdio.h>
 #include <signal.h>
 #include "Start.h"
@@ -6,10 +7,13 @@
 
 #include "Look.h"
 #include "Chat.h"
+#include "Exit.h"
 
+#include "DynBase.h"
+using namespace std;
 
 extern int move;
-
+Select *Select::select_ = NULL;
 int Select_Direct::Direct(int t, int *, char *) {}
 int Select_Direct::Direct2(int t, int *, char *) {}
 
@@ -43,13 +47,28 @@ int Select::Direct(int client_sock,int *flag,char *name)
 {
 	Node user;
 
-	printf("请输入要执行的操作:\n");
-	scanf("%d",&user.action);
+aa:	printf("请输入要执行的操作:\n");
+	cout << "look/chat/out"  << endl;
+	cin >> user.Sel;
 	if(move == 0)		//如果被踢出，改变标志位
 	{
 	    user.action = -1;
 	}
-	write(client_sock,&user,sizeof(user));
+
+	if(strcmp(user.Sel,"look")== 0 || strcmp(user.Sel,"chat")== 0 || strcmp(user.Sel,"out")== 0 )
+	{
+		write(client_sock,&user,sizeof(user));
+		Fact = reinterpret_cast<AB_Factory *>(DynObjectFactory::CreateObject(user.Sel));
+		Func = Fact->Factory();
+		Func->Function(client_sock);	
+	}
+	else
+	{
+
+		cout << "请输入正确的指令！" << endl;	
+		goto aa;	
+	}	
+/*
 	switch(user.action)
 	{
 		case -1:
@@ -111,7 +130,7 @@ int Select::Direct(int client_sock,int *flag,char *name)
 
 	    case 11:
 		{
-		    //Exit(flag);			//退出聊天室
+			*flag = 0;	//退出聊天室
 		}break;
 
 		case 12:
@@ -124,7 +143,7 @@ int Select::Direct(int client_sock,int *flag,char *name)
 			printf("请输入正确的指令!!\n");
 		}
 	}
-
+*/
 	return 0;
 }
 

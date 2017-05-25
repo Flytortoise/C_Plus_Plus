@@ -19,7 +19,7 @@ public :
 	int Direct(int client_stock);
 
 	static vector <Online_data> OnlinePeople;
-
+	static int flag;		//重复执行功能
 private :
 	start();
 	void Date_base(int client_stock);
@@ -30,8 +30,6 @@ private :
 	sqlite3 *db2_;
 
 	Online_data *user;
-
-
 
 	AB_Action *pass;
 	Select_Direct *select;

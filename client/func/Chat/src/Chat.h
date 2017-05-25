@@ -2,6 +2,7 @@
 #define CHAT_H_
 
 #include "Abstract.h"
+#include "my_scanf.h"
 
 class Chat : public AB_Function
 {

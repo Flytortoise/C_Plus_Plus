@@ -2,6 +2,8 @@
 #include <stdio.h>
 using namespace std;
 
+Online_data* Online_data::data = NULL;
+
 Online_data::Online_data()
 {
 

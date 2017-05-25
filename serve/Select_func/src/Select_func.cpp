@@ -1,17 +1,21 @@
 #include <stdio.h>
 #include <signal.h>
 #include <unistd.h>
+#include <iostream>
 
 #include "Select_func.h"
 #include "Data.h"
 
+#include "DynBase.h"
 #include "Look.h"
 #include "Chat.h"
+#include "Exit.h"
 
+using namespace std;
 
 int Select_Direct::Direct(int t, int *) {}
 int Select_Direct::Direct2(int t, int *) {}
-
+Select* Select::select_ = NULL;
 
 Select::Select()
 {
@@ -40,8 +44,10 @@ int Select::Direct(int client_sock,int *flag)
 {
 	Node user;
 	read(client_sock,&user,sizeof(user));		//获取具体操作
-
-	switch(user.action)
+	Fact = reinterpret_cast<AB_Factory *>(DynObjectFactory::CreateObject(user.Sel));
+	Func = Fact->Factory();
+	Func->Function(client_sock);
+/*	switch(user.action)
 	{
 		case -1:		//被踢出则直接返回
 		{
@@ -102,14 +108,16 @@ int Select::Direct(int client_sock,int *flag)
 
 	    case 11:
 		{
-		    //Exit(client_sock,flag);		//退出聊天室
+			Func = Exit::GetExit();
+		    Func->Function(client_sock);		//退出聊天室
+		   ***** *flag = 0;		//将标志位置为0
 		}break;
 
 		default :
 		{
 		}break;
 	}
-
+*/
 	return 0;
 }
 

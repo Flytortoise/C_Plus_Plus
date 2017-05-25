@@ -6,7 +6,6 @@ all : $(Target)
 
 mm:
 	cd main && $(MAKE)
-	cd Init && $(MAKE)
 	cd Abstract && $(MAKE)
 	cd Data && $(MAKE)
 	cd my_stock && $(MAKE)
@@ -15,12 +14,14 @@ mm:
 	cd my_scanf && $(MAKE)
 	cd interface && $(MAKE)
 	cd Select_func && $(MAKE)
+	cd Factory/FuncFactory && $(MAKE)
 	cd func/Look && $(MAKE)
 	cd func/Chat && $(MAKE)
+	cd func/Exit && $(MAKE)
+
 
 mc:
 	cd main && $(MAKE) clean
-	cd Init && $(MAKE) clean
 	cd Abstract && $(MAKE) clean
 	cd Data && $(MAKE) clean
 	cd my_stock && $(MAKE) clean
@@ -29,8 +30,11 @@ mc:
 	cd my_scanf && $(MAKE) clean
 	cd interface && $(MAKE) clean
 	cd Select_func && $(MAKE) clean
+	cd Factory/FuncFactory && $(MAKE) clean
 	cd func/Look && $(MAKE) clean
 	cd func/Chat && $(MAKE) clean
+	cd func/Exit && $(MAKE) clean
+
 
 $(Target) : mm
 	@$(CC) -o $(Target) $(Allobjs) -lpthread -lsqlite3

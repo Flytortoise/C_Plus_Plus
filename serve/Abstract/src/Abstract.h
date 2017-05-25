@@ -33,4 +33,11 @@ public :
 
 };
 
+class AB_Factory
+{
+public :
+	virtual AB_Function * Factory() = 0;
+	virtual ~AB_Factory();	
+};
+
 #endif

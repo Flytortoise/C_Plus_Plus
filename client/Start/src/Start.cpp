@@ -13,7 +13,7 @@ int kong = 1;
 pthread_t pid;
 
 sqlite3 * start::db;
-
+start * start::my_start_ = NULL;
 start::start()
 {
 	user = Online_data::GetData();
@@ -151,6 +151,7 @@ void * Son(void *p)	//读线程
 	close(fd[1]);
 }
 
+int start::flag = 0;
 
 int start::Direct(int client_stock)
 {
@@ -158,7 +159,7 @@ int start::Direct(int client_stock)
 	char buffer[BUFF_SIZE];
 	char *msg;
 	int p_flag = 0;
-    int flag = 1;
+    flag = 1;
 	int one = 0;
 
 

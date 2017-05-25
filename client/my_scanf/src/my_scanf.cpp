@@ -11,7 +11,7 @@
 #define SUCCESS 1
 
 
-
+MyScanf *MyScanf::scanf_ = NULL;
 int AB_Scanf::Action(char s[], int len){}
 int MyScanf::Action(){}
 int MyScanf::Action(int t){}

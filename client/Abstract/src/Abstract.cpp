@@ -14,3 +14,5 @@ int AB_Function::Function(){}
 
 AB_Data::~AB_Data(){}
 
+AB_Function * AB_Factory::Factory(){}
+AB_Factory::~AB_Factory(){}	

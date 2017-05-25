@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <strings.h>
 
-
+Serve_Stock* Serve_Stock::serve = NULL;
 Serve_Stock :: Serve_Stock()
 {
 	sockaddr_len = sizeof(struct sockaddr);

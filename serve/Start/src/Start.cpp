@@ -5,7 +5,7 @@
 
 
 using namespace std;
-
+start* start::my_start_ = NULL;
 start::start()
 {
 	char *etc2 = "etc/temp.db";
@@ -15,6 +15,7 @@ start::start()
 }
 
 vector <Online_data> start::OnlinePeople;
+int start::flag = 0;
 
 start * start::CreateStart()
 {
@@ -62,7 +63,7 @@ void start::Date_base(int client_stock)	//数据库处理
 
 int start::Direct(int client_stock)
 {
-	int flag = 1;		//重复执行功能
+	flag = 1;		//重复执行功能
 	int p_flag;		//退出登录的标志位
 	Node tmp;		//tmp保存是否被踢出功能的标志位
 	tmp.action = 1;

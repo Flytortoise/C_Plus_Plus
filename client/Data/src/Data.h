@@ -8,15 +8,15 @@
 #define SEND_SIZE 100
 
 #include "Abstract.h"
+#include <string>
+
+using namespace std;
 
 class Online_data : public AB_Data		//通信的交互数据
 {
 
 public :
-	Online_data();
-	static Online_data * data;
-	static Online_data* GetData();
-	static void FreeData();
+	
 
 	int action;
     int sock;
@@ -29,6 +29,15 @@ public :
 	char password[PASS_SIZE];
 	char buffer[BUFF_SIZE];
 	char send[SEND_SIZE];
+
+	char Sel[ACC_SIZE];
+
+	static Online_data* GetData();
+	static void FreeData();
+	static Online_data * data;
+
+	~Online_data();
+	Online_data();
 private :
 	
 	

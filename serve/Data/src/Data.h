@@ -2,6 +2,9 @@
 #define DATA_H_
 
 #include "Abstract.h"
+#include <string>
+
+using namespace std;
 
 #define ACC_SIZE 20
 #define PASS_SIZE 20
@@ -23,6 +26,8 @@ public :
 	char password[PASS_SIZE];
 	char buffer[BUFF_SIZE];
 	char send[SEND_SIZE];
+
+	char Sel[ACC_SIZE];
 
 	static Online_data* GetData();
 	static void FreeData();

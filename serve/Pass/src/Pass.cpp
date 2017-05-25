@@ -12,6 +12,8 @@
 
 using namespace std;
 
+Pass* Pass::pass_ = NULL;
+
 Pass::Pass()
 {
 	pass = Online_data::GetData();

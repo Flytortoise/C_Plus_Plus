@@ -9,7 +9,7 @@ void AB_Interface::Action2(char *){}
 
 
 Interface::Interface(){}
-
+Interface *Interface::interface_ = NULL;
 Interface * Interface::GetInterface()
 {
 	if(interface_ == NULL)

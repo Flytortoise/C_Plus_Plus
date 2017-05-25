@@ -24,7 +24,7 @@ public :
 private :
 	Select();
 	AB_Function * Func;
-
+	AB_Factory * Fact;
 };
 
 #endif

@@ -10,6 +10,9 @@
 
 using namespace std;
 extern int fd[2];		//线程通信管道
+
+Pass * Pass::pass_ = NULL;
+
 Pass::Pass()
 {
 	pass = Online_data::GetData();
