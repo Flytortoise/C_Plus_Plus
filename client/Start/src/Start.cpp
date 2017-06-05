@@ -20,8 +20,6 @@ start::start()
 	pass = Pass::GetPass();
 	select = Select::GetSelect();
 	interface = Interface::GetInterface();
-
-	
 }
 
 start * start::CreateStart()
@@ -69,8 +67,8 @@ void SendText(Node &users)	//发送文件
 
 	int i = 0;
 	char ch;
-	FILE *fp = fopen(users.buffer,"w+");;
 	sprintf(users.buffer,"%s_",users.buffer);
+	FILE *fp = fopen(users.buffer,"w+");
 	while((ch = users.send[i]) != '\0')
 	{
 		fputc(ch,fp);
@@ -84,7 +82,7 @@ void * Son(void *p)	//读线程
 {
 	char etc[BUFF_SIZE];
 	char buffer[BUFF_SIZE];
-	
+
 	char *msg;
 
 	int client_stock = *((int *)p);
@@ -158,10 +156,9 @@ int start::Direct(int client_stock)
 	char etc[BUFF_SIZE];
 	char buffer[BUFF_SIZE];
 	char *msg;
-	int p_flag = 0;
     flag = 1;
 	int one = 0;
-
+	int p_flag;
 
 	pipe(fd);
 
@@ -171,7 +168,6 @@ int start::Direct(int client_stock)
 	{
 		pass->Action(client_stock);	//进行密码登录操作，登录成功则返回登录用户的信息
 		strcpy(id,user->id);
-
 		if(user->action != 1)	//用户退出登录
 		{
 		    break;
@@ -213,14 +209,15 @@ int start::Direct(int client_stock)
 		{
 			while(flag == 1)
 			{
+				printf("1\n");
 				read(fd[0],user,sizeof(Node));
-
+				printf("2\n");
 				if(one == 1)
 				{
 					one--;
 					interface->Action(user->name);		//打印一次功能选择界面
 				}
-
+				
 				p_flag = select->Direct(client_stock,&flag,user->name);	//执行具体功能
 
 				if(move == 0)		//判断是否被管理员踢出
@@ -232,11 +229,11 @@ int start::Direct(int client_stock)
 				    user->flag = 1;
 				}
 				write(client_stock,user,sizeof(Node));	//将是否被踢出信息，发送给服务器
-
 				if(p_flag == -1 || move == 0)	//被踢出或执行退出登录
 				{
 				    break;		//返回到用户登录界面
 				}
+				printf("3\n");
 			}
 		}
 		

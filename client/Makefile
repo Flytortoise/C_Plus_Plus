@@ -17,6 +17,14 @@ mm:
 	cd Factory/FuncFactory && $(MAKE)
 	cd func/Look && $(MAKE)
 	cd func/Chat && $(MAKE)
+	cd func/Out && $(MAKE)
+	cd func/AllChat && $(MAKE)
+	cd func/Fast && $(MAKE)
+	cd func/Face && $(MAKE)
+	cd func/Change_Name && $(MAKE)
+	cd func/Change_Passwd && $(MAKE)
+	cd func/Help && $(MAKE)
+	cd func/Text && $(MAKE)
 	cd func/Exit && $(MAKE)
 
 
@@ -33,6 +41,14 @@ mc:
 	cd Factory/FuncFactory && $(MAKE) clean
 	cd func/Look && $(MAKE) clean
 	cd func/Chat && $(MAKE) clean
+	cd func/Out && $(MAKE) clean
+	cd func/AllChat && $(MAKE) clean
+	cd func/Fast && $(MAKE) clean
+	cd func/Face && $(MAKE) clean
+	cd func/Change_Name && $(MAKE) clean
+	cd func/Change_Passwd && $(MAKE) clean
+	cd func/Help && $(MAKE) clean
+	cd func/Text && $(MAKE) clean
 	cd func/Exit && $(MAKE) clean
 
 

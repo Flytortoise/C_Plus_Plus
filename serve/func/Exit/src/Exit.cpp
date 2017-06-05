@@ -1,25 +1,23 @@
 #include "Exit.h"
 #include "Data.h"
 #include "Start.h"
-
+#include "main.h"
 int Exit::Function(int client_sock)
 {
-	vector<Node>::iterator t = start::OnlinePeople.begin();
-	while(t != start::OnlinePeople.end())
+	vector<Node>::iterator t = OnlinePeople.begin();
+	while(t != OnlinePeople.end())
 	{
 		if(t->sock == client_sock)
 		{
-			t = start::OnlinePeople.erase(t);			
+			t = OnlinePeople.erase(t);			
 		}
 		else
 		{
 			t++;
-		}
+		}	
 		
 	}
-
-	start::flag = 0; 
-	return 0;
+	return -1;
 }
 
 Exit * Exit::Exit_ = NULL;

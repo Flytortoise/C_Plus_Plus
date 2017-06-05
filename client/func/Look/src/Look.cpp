@@ -44,6 +44,8 @@ int Look::Function(int client_stock)
 		    printf("		%s\n",temp.name);
 		}
 	}
+	
+	return 0;
 }
 
 int Look::Function() {}

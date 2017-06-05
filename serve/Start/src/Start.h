@@ -17,8 +17,7 @@ public :
 	static void FreeStart();
 	static start * my_start_;
 	int Direct(int client_stock);
-
-	static vector <Online_data> OnlinePeople;
+	
 	static int flag;		//重复执行功能
 private :
 	start();
@@ -29,7 +28,7 @@ private :
 	char *msg_;
 	sqlite3 *db2_;
 
-	Online_data *user;
+	Online_data user;
 
 	AB_Action *pass;
 	Select_Direct *select;

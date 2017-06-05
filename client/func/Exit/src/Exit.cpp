@@ -4,8 +4,7 @@
 
 int Exit::Function(int client_sock)
 {
-	start::flag = 0; 
-	return 0;
+	return -1;
 }
 
 Exit * Exit::Exit_ = NULL;

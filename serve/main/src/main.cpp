@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+#include "Data.h"
 #include "Abstract.h"
 #include "my_stock.h"
 #include "Start.h"
@@ -10,7 +12,7 @@ void * Start (void *p);
 
 
 //Client_Stock::client = NULL;
-
+vector <Online_data> OnlinePeople;
 int main(int argc, char *argv[])
 {
 	pthread_t client_tidp;

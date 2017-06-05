@@ -25,6 +25,8 @@ private :
 	Select();
 	AB_Function * Func;
 	AB_Factory * Fact;
+
+	int Check(char *);
 };
 
 #endif

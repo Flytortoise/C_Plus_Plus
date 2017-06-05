@@ -35,6 +35,7 @@ public :
 
 	~Online_data();
 	Online_data();
+	//Online_data(const Online_data &);
 
 private :
 	

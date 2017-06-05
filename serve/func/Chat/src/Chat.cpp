@@ -1,11 +1,12 @@
 #include "Chat.h"
 #include "Data.h"
 #include "Start.h"
+#include "main.h"
 
 int Chat::Function(int client_sock)
 {
 	Node user;
-	vector<Node>::iterator t = start::OnlinePeople.begin();
+	vector<Node>::iterator t = OnlinePeople.begin();
 	char name[ACC_SIZE];
 	user.sock = -1;		//初始化
 	user.action = 1;
@@ -17,7 +18,7 @@ int Chat::Function(int client_sock)
 	char name2[ACC_SIZE];
 	sqlite3 *db2;
 
-	while(t != start::OnlinePeople.end())
+	while(t != OnlinePeople.end())
 	{
 		if(t->sock == client_sock)
 		{
@@ -35,8 +36,8 @@ int Chat::Function(int client_sock)
 	{
 		read(client_sock,&user,sizeof(user));		
 
-		t = start::OnlinePeople.begin();
-		while(t != start::OnlinePeople.end())
+		t = OnlinePeople.begin();
+		while(t != OnlinePeople.end())
 		{
 		    if(strcmp(user.name,t->name) == 0)
 			{

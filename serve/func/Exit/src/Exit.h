@@ -1,5 +1,5 @@
-#ifndef Exit_H_
-#define Exit_H_
+#ifndef EXIT_H_
+#define EXIT_H_
 
 #include "Abstract.h"
 

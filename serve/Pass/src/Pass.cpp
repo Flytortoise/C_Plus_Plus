@@ -1,4 +1,4 @@
-
+#include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,7 +9,7 @@
 #include <vector>
 #include "Start.h"
 
-
+extern vector <Online_data> OnlinePeople;
 using namespace std;
 
 Pass* Pass::pass_ = NULL;
@@ -86,8 +86,8 @@ int Callback(void *para, int count, char **c_value,char **c_name)	//检测有无
 
 int Online_(char id[])
 {
-	vector<Node>::iterator t = start::OnlinePeople.begin();
-	while(t != start::OnlinePeople.end())
+	vector <Node>::iterator t = OnlinePeople.begin();
+	while(t != OnlinePeople.end())
 	{
 		if(strcmp(t->id,id) == 0)
 		{
