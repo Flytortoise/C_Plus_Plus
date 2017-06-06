@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
 void * Start (void *p)
 {
-	AB_Director * my_start = start::CreateStart();
+	start *my_start = new start();
 	my_start->Direct(*(static_cast<int *>(p)));
-	start::FreeStart();
+	delete my_start;
 }

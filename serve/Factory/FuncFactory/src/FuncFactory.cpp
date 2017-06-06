@@ -11,6 +11,7 @@
 #include "Out.h"
 #include "Text.h"
 #include "Exit.h"
+#include "Record.h"
 
 REGISTER_CLASS(look);
 REGISTER_CLASS(chat);
@@ -23,6 +24,7 @@ REGISTER_CLASS(out);
 REGISTER_CLASS(help);
 REGISTER_CLASS(text);
 REGISTER_CLASS(ex);
+REGISTER_CLASS(record);
 
 
 AB_Function * look::Factory()
@@ -79,4 +81,9 @@ AB_Function * text::Factory()
 AB_Function * ex::Factory()
 {
 	return Exit::GetExit();
+}
+
+AB_Function * record::Factory()
+{
+	return Record::GetRecord();
 }

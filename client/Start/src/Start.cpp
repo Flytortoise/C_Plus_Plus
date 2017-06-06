@@ -149,14 +149,13 @@ void * Son(void *p)	//读线程
 	close(fd[1]);
 }
 
-int start::flag = 0;
 
 int start::Direct(int client_stock)
 {
 	char etc[BUFF_SIZE];
 	char buffer[BUFF_SIZE];
 	char *msg;
-    flag = 1;
+    int flag = 1;
 	int one = 0;
 	int p_flag;
 
@@ -209,9 +208,7 @@ int start::Direct(int client_stock)
 		{
 			while(flag == 1)
 			{
-				printf("1\n");
 				read(fd[0],user,sizeof(Node));
-				printf("2\n");
 				if(one == 1)
 				{
 					one--;
@@ -233,7 +230,12 @@ int start::Direct(int client_stock)
 				{
 				    break;		//返回到用户登录界面
 				}
-				printf("3\n");
+
+				if(p_flag == -2)
+				{
+					flag = 0;
+					break;
+				}
 			}
 		}
 		

@@ -13,14 +13,11 @@ using namespace std;
 class start : public AB_Director
 {
 public :
-	static start * CreateStart();
-	static void FreeStart();
-	static start * my_start_;
 	int Direct(int client_stock);
-	
-	static int flag;		//重复执行功能
-private :
 	start();
+	//static int flag;		//重复执行功能
+private :
+	
 	void Date_base(int client_stock);
 	//int OffLine(void *para, int count, char **c_value, char **c_name);
 

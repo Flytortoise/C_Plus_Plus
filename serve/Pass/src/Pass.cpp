@@ -124,7 +124,7 @@ int Pass::Action(int client_sock)
 				    pass->action = 1;
 					write(client_sock,pass,sizeof(*pass));	//登录成功
 					sqlite3_close(db);
-					return 1;
+					return 0;
 				}
 				else
 				{
@@ -184,9 +184,8 @@ int Pass::Action(int client_sock)
 			}
 			else		//退出操作
 			{
-				pass->action = -1;
 				sqlite3_close(db);
-			    return 0;
+			    return -1;
 			}
 		}
 	}

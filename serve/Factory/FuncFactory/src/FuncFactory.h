@@ -69,6 +69,11 @@ public :
 	AB_Function * Factory();
 };
 
+class record : public AB_Factory
+{
+public :
+	AB_Function * Factory();
+};
 
 #endif
 

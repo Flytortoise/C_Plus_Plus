@@ -26,6 +26,7 @@ mm:
 	cd func/Help && $(MAKE)
 	cd func/Text && $(MAKE)
 	cd func/Exit && $(MAKE)
+	cd func/Record && $(MAKE)
 
 
 mc:
@@ -50,7 +51,7 @@ mc:
 	cd func/Help && $(MAKE) clean
 	cd func/Text && $(MAKE) clean
 	cd func/Exit && $(MAKE) clean
-
+	cd func/Record && $(MAKE) clean
 
 $(Target) : mm
 	@$(CC) -o $(Target) $(Allobjs) -lpthread -lsqlite3

@@ -18,7 +18,6 @@ public :
 	static void FreeStart();
 	static start * my_start_;
 	static sqlite3 *db;
-	static int flag;
 	
 
 	int Direct();

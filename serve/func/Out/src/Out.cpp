@@ -19,8 +19,7 @@ int Out::Function(int client_sock)
 		
 	}
 
-	start::flag = 0; 
-	return 0;
+	return -2;
 }
 
 Out * Out::Out_ = NULL;
