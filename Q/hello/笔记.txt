@@ -1,0 +1,15 @@
+qmake -project 以文件夹名创建.pro工程文件
+notepad hello.pro  	用记事本打开文件
+
+pro中的 . 表示标准路径
+如果要加自定义要在后面加 \
+						c:/.....
+
+最下面Input是输入文件
+SOURCES表示源文件
+如果有自定义头文件，还要加HEADER += 自定义头文件名.h
+
+
+qmake	生成makefile
+	debug 调试	release	发行
+	默认生成Makefile.Debug和Makefile.Release两个版本
